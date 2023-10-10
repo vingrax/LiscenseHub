@@ -1,0 +1,222 @@
+{% extends 'home/homepage.html' %}
+{% load static %}
+{% block content %}
+  {% csrf_token %}
+  <link rel="stylesheet" href="{% static 'licensemgmt/addlicense.css' %}">
+  <script src={% static 'licensemgmt/scripts/licensemodal.js'%}></script> 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />  
+  <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
+  <div class="title">{{ device.dns_name }}</div>
+  <div class="container">
+    <div class="box">
+        
+        <div class="assignments">
+        <div class='top-table'>
+          <div class='heading'>Device Licenses</div>
+          <table class="assignment-table" id='myTable'>
+            <thead>
+              <tr>
+                <th>License Name</th>
+                <th>Remarks</th>
+                <th>Assigned Date</th>
+                <th>Expiry Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for assignment in device.assgned_device.all %}
+                {% if assignment.license.license_type == 'Device License' and assignment.active %}
+                <tr>
+                  <td>{{ assignment.license.license_name }}</td>
+                  <td>{{ assignment.remarks }}</td>
+                  <td>{{ assignment.assgnd_date }}</td>
+                  <td>{{ assignment.expiry_date }}</td>
+                </tr>
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+          <div class="bottom-table">
+            <div class='heading'>User Licenses</div>
+            <table class="assignment-table">
+              <thead>
+                <tr>
+                  <th>License Name</th>
+                  <th>Remarks</th>
+                  <th>Assigned Date</th>
+                  <th>Expiry Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for assignment in device.assgned_device.all %}
+                  {% if assignment.license.license_type == 'User License' and assignment.active %}
+                  <tr>
+                    <td>{{ assignment.license.license_name }}</td>
+                    <td>{{ assignment.remarks }}</td>
+                    <td>{{ assignment.assgnd_date }}</td>
+                    <td>{{ assignment.expiry_date }}</td>
+                  </tr>
+                  {% endif %}
+                {% endfor %}            
+              </tbody>
+            </table> 
+                     
+          </div>
+        </div>
+         
+      <div class='license-controls'>         
+        <button class="add-license-button" id="assign-license-btn">Add License</button>  
+        <button class="add-license-button" id='remove-license-btn'>Remove License</button>        
+      </div>   
+    </div>
+  </div>
+  <div class="inactivecontainer">
+    <div class="box">
+        <div class='heading'>History</div>
+        <div class="assignments">
+          <table class="history-table" id="history-table">
+            <thead>
+              <th>License</th>
+              <th>Assigned Date</th>
+              <th>Removed Date</th>
+            </thead>
+          
+          <tbody>
+            {% for assignment in device.assgned_device.all %}
+              {% if not assignment.active %}
+                <tr>
+                  <td>{{ assignment.license }}</td> 
+                  <td>{{assignment.assgnd_date}}</td> 
+                  <td>{{assignment.removed_date}}</td>
+                </tr>
+
+                
+              {% endif %}
+              {% endfor %}            
+          </tbody>
+        </table> 
+              
+            
+    </div>          
+    </div>
+  </div> 
+
+{% comment %} Modals Here {% endcomment %}
+<div id="assign-license-modal" class="modal">
+  <div class="modal-content">
+    <div class="switch-section">
+      <button id="device-license-btn" class="switch-button">Device License</button>
+      <button id="user-license-btn" class="switch-button">User License</button>
+    </div>
+    <h2>Assign License</h2>
+    <form id="assign-license-form" method="post">
+      {% csrf_token %}
+      <input type="text" hidden="true" name="action" value="add">
+      
+      <label for="product">Filter by Product:</label>
+      <select name="product" id="product">
+        <option value="">All Products</option>
+        {% for product in products %}
+          <option value="{{ product.id }}">{{ product.product_name }}</option>
+        {% endfor %}
+      </select>
+      <br>
+
+      <div id="device-license-section">
+        <label for="licenses">Select Device Licenses:</label>
+        <ul id="licenses-device" class="license-list">
+          {% for license in licenses %}
+            {% if license.license_type == 'Device License'%}
+            <li class="license-item" data-product="{{ license.product.id }}">
+              <input type="checkbox" name="licenses" id="license-{{ license.id }}" value="{{ license.id }}">
+              <label for="license-{{ license.id }}">{{ license.license_name }}</label>
+              <input type="text" name="remarks-{{ license.id }}" id="remarks-{{ license.id }}">
+            </li>
+            {% endif %}                    
+          {% endfor %}
+        </ul>
+      </div>
+      
+      <div id="user-license-section" style="display: none;">
+        <label for="licenses">Select User Licenses:</label>
+        <ul id="licenses-user" class="license-list">
+          {% for license in licenses %}
+            {% if license.license_type == 'User License' %}
+            <li class="license-item" data-product="{{ license.product.id }}">
+              <input type="checkbox" name="licenses" id="license-{{ license.id }}" value="{{ license.id }}">
+              <label for="license-{{ license.id }}">{{ license.license_name }}</label>
+              <input type="text" name="remarks-{{ license.id }}" id="remarks-{{ license.id }}">
+              <input type="text" name="user-{{ license.id }}" id="user-{{ license.id }}">
+              <input type="text" name="password-{{ license.id }}" id="password-{{ license.id }}">
+            </li>
+            {% endif %}                    
+          {% endfor %}
+        </ul>
+      </div>
+    
+      <br>
+      <input type="submit" value="Assign Licenses">
+    </form>    
+  </div>
+</div>
+
+
+<script>
+  $(document).ready(function() {
+    // Initial display of all licenses
+    $('#licenses-device li').show();
+
+    // On product dropdown change, filter the licenses based on the selected product
+    $('#product').change(function() {
+      var selectedProductId = $(this).val();
+      if (selectedProductId) {
+        // Hide licenses not matching the selected product
+        $('#licenses-device li').hide();
+        $('#licenses-device li[data-product="' + selectedProductId + '"]').show();
+        $('#licenses-user li').hide();
+        $('#licenses-user li[data-product="' + selectedProductId + '"]').show();
+      } else {
+        // Show all licenses when no product is selected
+        $('#licenses-device li').show();
+        $('#licenses-user li').show();
+      }
+    });
+
+    // Switch between Device License and User License sections
+    $('#device-license-btn').click(function() {
+      $('#user-license-section').hide();
+      $('#device-license-section').show();
+    });
+
+    $('#user-license-btn').click(function() {
+      $('#device-license-section').hide();
+      $('#user-license-section').show();
+    });
+  });
+</script>
+
+
+
+{% comment %} Remove License Modal {% endcomment %}
+  <div id="remove-license-modal" class="modal">
+    <div class="modal-content">
+      <h2>Remove License</h2>
+      <form id="remove-license-form" method="post">
+        {% csrf_token %}
+        <input type="text" hidden="true" name="action" value="remove">
+        <div class="assigned">
+          {% for assignments in device.assgned_device.all %}
+          {% if assignments.active %}
+            <input type="checkbox" name="licenses[]" value="{{ assignments.id }}">
+            <label>{{ assignments.license }}</label><br>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <input type="submit" value="Remove Selected Licenses">
+      </form>
+    </div>
+</div>
+{% endblock content %}
+
+

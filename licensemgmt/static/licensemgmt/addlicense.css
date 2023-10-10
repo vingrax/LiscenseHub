@@ -1,0 +1,261 @@
+.container {
+  position: relative;
+  border-radius: .7rem;
+  border: 2px solid var(--accents);
+  background-color: var(--bg-color);
+  color: #fff;
+  margin: 5px;
+}
+
+.container .box {
+  min-height: 8em;
+  height: fit-content;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.074);
+  border: 1px solid rgba(255, 255, 255, 0.222);
+  border-radius: .7rem;
+  transition: all ease .3s;
+}
+
+.container .box {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  color: var(--default-text);
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.container .box div strong {
+  display: block;
+  margin-bottom: .5rem;
+}
+
+.container .box div p {
+  margin: 0;
+  font-size: .9em;
+  font-weight: 300;
+  letter-spacing: .1em;
+}
+
+.container .box div span {
+  font-size: .7rem;
+  font-weight: 300;
+}
+
+.container .box div span:nth-child(3) {
+  font-weight: 500;
+  margin-right: .2rem;
+}
+
+/* .container .box:hover {
+  box-shadow: 0px 0px 30px 6px #ffbb763f;
+  border: 1px solid rgba(255, 255, 255, 0.454);
+  color: #000000;
+  background-color: #fff;
+  cursor: pointer;
+} */
+
+.dmodal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.dmodal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  color: black;
+}
+.umodal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.umodal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  color: black;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  color: black;
+}
+
+.inactivecontainer {
+  position: relative;
+  border-radius: .7rem;
+  border: 2px solid var(--accents);
+  background-color: var(--bg-color);
+  color: #fff;
+  margin: 5px;
+}
+
+.inactivecontainer .box {
+  min-height: 8em;
+  height: fit-content;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.074);
+  border: 1px solid rgba(255, 255, 255, 0.222);
+  border-radius: .7rem;
+  transition: all ease .3s;
+}
+
+.inactivecontainer .box {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  color: var(--default-text);
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.inactivecontainer .box div strong {
+  display: block;
+  margin-bottom: .5rem;
+}
+
+.inactivecontainer .box div p {
+  margin: 0;
+  font-size: .9em;
+  font-weight: 300;
+  letter-spacing: .1em;
+}
+
+.inactivecontainer .box div span {
+  font-size: .7rem;
+  font-weight: 300;
+}
+
+.inactivecontainer .box div span:nth-child(3) {
+  font-weight: 500;
+  margin-right: .2rem;
+}
+
+
+
+
+/* Common styles for the tables */
+.assignment-table {
+  border-collapse: collapse;
+  width: 100%;
+  transition: width 0.3s ease;
+}
+
+.assignment-table th,
+.assignment-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid var(--main-color);
+}
+
+.assignment-table th {
+  background-color: var(--main-color);
+  color: var(--font-color-light);
+  font-weight: bold;
+}
+
+.assignment-table td {
+  background-color: var(--accents);
+  color: var(--default-text );
+}
+
+.top-table{
+  width: 100%;
+}
+.bottom-table{
+  width: 100%;
+}
+.heading{
+  font-size: larger;
+  text-align: center;
+  margin-top: 1%;
+}
+.add-license-button {
+  background-color: var(--main-color);
+  color: var(--font-color-light);
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+   
+}
+
+.add-license-button:hover {
+  background-color: var(--accents);
+}
+
+
+
+
+
+/* Common styles for the tables */
+.history-table {
+  border-collapse: collapse;
+  width: 100%;
+  transition: width 0.3s ease;
+}
+
+.history-table th,
+.history-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid var(--main-color);
+}
+
+.history-table th {
+  background-color: var(--main-color);
+  color: var(--font-color-light);
+  font-weight: bold;
+}
+
+.history-table td {
+  background-color: var(--accents);
+  color: var(--default-text );
+}

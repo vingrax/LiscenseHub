@@ -1,0 +1,89 @@
+:root{
+  --font-color-dark: #000000;
+    --font-color-light: #FFF;
+    --bg-color: #000000;
+    --main-color: #000000;
+    --accents:#00a2ff;
+    --default-text: #fff;
+    --bg-color-focus: #fff;
+}
+body {
+  
+    font-family: Arial, sans-serif;
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 0;
+    
+  }
+
+  header {
+    background-color: var(--bg-color);
+    padding: 20px;
+    color: var(--default-text);
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 36px;
+    margin: 0;
+    position: relative;
+  }
+
+  h1::before {
+    content: "License";
+    background-color: var(--accents);
+    color: rgb(0, 0, 0);
+    padding: 3px 5px;
+    border-radius: 7%;
+    top: 50%;
+    right: 0;
+    transform: translate(100%, -50%);
+  }
+
+  
+ 
+  .card {
+    padding-left: .5%;
+    padding-right: .5%;
+    width: auto;
+    height: fit-content;
+    background: var(--bg-color);
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  
+  .card p {
+    height: 100%;
+    flex: 1;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all .5s;
+    background: var(--bg-color);
+    border: 1px solid var(--accents);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card p:hover {
+    flex: 1.5;
+  }
+  
+  .card p a {
+    min-width: 14em;
+    padding: .5em;
+    text-align: center;
+    transition: all .5s;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: var(--default-text);
+    letter-spacing: .1em;
+    width: 100%;  
+  }
+  
+
+
+
+ 

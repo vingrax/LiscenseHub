@@ -1,0 +1,31 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title>LiscenseHub</title>
+    <link rel="stylesheet" href={% static 'home/homepage.css' %}>
+    
+</head>
+
+<body >
+    <header>
+        <h1>Hub</h1>
+        {% comment %} <p>License Management Made Easy</p> {% endcomment %}
+      </header>
+    
+      <main>    
+        <div class="card">
+            <p><a href="{% url 'managedevices' %}">Devices</a></p>
+            <p><a href="{% url 'home' %}">Expiring Licenses</a></p>
+            <p><a href="{% url 'general' %}">License Reports</a></p>
+        </div>          
+      </main>
+      
+      {% block content %}
+      {% endblock content %}
+      <div id='main'></div>
+     
+</body>
+
+</html>

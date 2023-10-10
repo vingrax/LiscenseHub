@@ -1,0 +1,35 @@
+{% extends 'home/homepage.html' %}
+{% load static %}
+{% block content %}
+{% csrf_token %}
+    <script src={% static 'licensemgmt/scripts/search.js'%}></script> 
+    <link rel="stylesheet" href={% static 'licensemgmt/unified.css' %}>
+    <div class="search-container">
+        
+        <div class="input-container">
+            <label for="input" class="label">Search</label>
+            <input type="text" id="input" oninput=debouncedSearch()>
+        </div>
+        <div class="wrapper">
+            <div class="option">
+                <input class="input" type="radio" name="btn" value="DNS" checked>
+                <div class="btn">
+                  <span class="span">DNS Name</span>
+                </div>
+            </div>
+
+            <div class="option">
+                <input class="input" type="radio" name="btn" value="IP">
+                <div class="btn">
+                    <span class="span">IPV4</span>
+                </div>  
+            </div>
+        </div>    
+    </div>
+    
+    <div class="screen" id='screen'>  
+            
+    </div>
+{% endblock content %}
+
+

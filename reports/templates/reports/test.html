@@ -1,0 +1,42 @@
+{% extends 'home/homepage.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href={% static 'reports/generalview.css' %}>
+{% csrf_token %}
+<div class="screen"> 
+    <table border='1'>
+        <thead>
+            <tr>
+                <th>Location</th>
+                {% for product, license_types in grouped_licenses.items %}
+                    {% for license_type, devices in license_types.items %}
+                        <th>{{ product.product_name }}<br>{{ license_type }}</th>
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for location in locations %}
+                <tr>
+                    <td>{{ location.name }}</td>
+                    {% for product, license_types in grouped_licenses.items %}
+                        {% for license_type, devices in license_types.items %}
+                            <td>
+                                {% for device in devices %}
+                                    {% if device.0 == location %}
+                                        {% if device.1 in product.product_name %}
+                                            {{ device.1 }}<br>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+
+
+{% endblock content %}

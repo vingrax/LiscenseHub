@@ -1,0 +1,32 @@
+{% extends 'home/homepage.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href={% static 'reports/generalview.css' %}>
+{% csrf_token %}
+<div class="screen">  
+
+    <h2>Number of Licenses Assigned to Each Location</h2>
+    <table border="1">
+        <tr>
+            <th rowspan='2'>Location</th>
+            {% for product in products %}
+                <th colspan="{{ product.license_set.count }}">{{ product.product_name }}</th>
+            {% endfor %}            
+        </tr>
+        {% for license_name in distinct_license_names %}
+        <th>{{ license_name }}</th>
+        {% endfor %}
+        {% for item in location_license_counts%}
+            <tr>
+            {% for key, value in item.items %}
+                <td>{{value}}</td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'general' %}?download_excel=1" class="btn btn-primary">Download as Excel</a>
+
+  </div>
+
+
+{% endblock content %}
